@@ -9,7 +9,18 @@ package codigo;
  * @author mariano
  */
 public enum Tokens {
-    Reservadas,
+    Programa,
+    Inicio,
+    Fin,
+    Variables,
+    Funcion,
+    Entero,
+    Si,
+    Entonces,
+    Sino,
+    Leer,
+    Escribir,
+    Modulo,
     ParentesisAbierto,
     ParentesisCerrado,
     PuntoComa,

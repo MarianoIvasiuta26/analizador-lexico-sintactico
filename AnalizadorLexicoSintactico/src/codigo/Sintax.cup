@@ -1,0 +1,75 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Programa, Inicio, Fin, Variables, Funcion, Entero, Si, Entonces, 
+    Sino, Leer, Escribir, Modulo, ParentesisAbierto, ParentesisCerrado, PuntoComa, 
+    Coma, Igual, Asignacion, DosPuntos, Identificador, Numero, ERROR;
+
+non terminal DECLARACIONES, DECLARACION, D_PROGRAMA, BLOQUE_PROGRAMA,
+    D_VARIABLES, D_FUNCION, BLOQUE, SENTENCIA_IF,
+    SENTENCIA_SINO, LLAMADA_FUNCION, ARGUMENTOS;
+
+start with DECLARACIONES;
+
+DECLARACIONES ::= 
+    DECLARACION DECLARACIONES
+;
+
+DECLARACION ::=
+    D_PROGRAMA | D_VARIABLES | D_FUNCION
+;
+
+D_PROGRAMA ::= 
+    Programa Identificador ParentesisAbierto ARGUMENTOS ParentesisCerrado PuntoComa | 
+    Inicio BLOQUE_PROGRAMA | Fin
+;
+
+BLOQUE_PROGRAMA ::=
+    Leer ParentesisAbierto ARGUMENTOS ParentesisCerrado PuntoComa BLOQUE_PROGRAMA |
+    Escribir ParentesisAbierto LLAMADA_FUNCION ParentesisCerrado
+;
+
+D_VARIABLES ::=
+    Variables Identificador Coma Identificador DosPuntos Entero PuntoComa
+;
+
+D_FUNCION ::=
+    Funcion Identificador ParentesisAbierto ARGUMENTOS ParentesisCerrado DosPuntos Entero PuntoComa BLOQUE
+;
+
+BLOQUE ::=
+    Inicio BLOQUE | Si Identificador  Igual Numero Entonces SENTENCIA_IF BLOQUE |
+    Sino SENTENCIA_SINO BLOQUE | Fin PuntoComa
+;
+
+SENTENCIA_IF ::=
+    Identificador Asignacion Identificador
+;
+
+SENTENCIA_SINO ::=
+    Identificador Asignacion LLAMADA_FUNCION
+;
+
+LLAMADA_FUNCION ::= 
+    Identificador ParentesisAbierto ARGUMENTOS ParentesisCerrado
+;
+
+ARGUMENTOS ::=
+    Identificador Coma Identificador | Identificador Coma Identificador DosPuntos Entero |
+    Identificador Coma Identificador Modulo Identificador
+;
+
