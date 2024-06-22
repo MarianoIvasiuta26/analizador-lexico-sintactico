@@ -1,6 +1,8 @@
 
 package codigo;
 
+import static codigo.Tokens.Linea;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,9 +11,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
+import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -43,89 +47,68 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     cont++;
                     resultado += "LINEA " + cont + "\n";
                     break;
-                case Comillas:
-                    resultado += "  <Comillas>\t\t" + lexer.lexeme + "\n";
+                case Programa:
+                    resultado += "  <Reservada programa>\t\t" + lexer.lexeme + "\n";
                     break;
-                case Cadena:
-                    resultado += "  <Tipo de dato>\t" + lexer.lexeme + "\n";
+                case Inicio:
+                    resultado += "  <Reservada inicio>\t" + lexer.lexeme + "\n";
                     break;
-                case T_dato:
-                    resultado += "  <Tipo de dato>\t" + lexer.lexeme + "\n";
+                case Fin:
+                    resultado += "  <Reservada fin>\t" + lexer.lexeme + "\n";
+                    break;
+                case Variables:
+                    resultado += "  <Reservada variables>\t" + lexer.lexeme + "\n";
+                    break;
+                case Funcion:
+                    resultado += "  <Reservada funcion>\t" + lexer.lexeme + "\n";
+                    break;
+                case Entero:
+                    resultado += "  <Reservada entero>\t" + lexer.lexeme + "\n";
                     break;
                 case Si:
-                    resultado += "  <Reservada if>\t" + lexer.lexeme + "\n";
+                    resultado += "  <Reservada si>\t" + lexer.lexeme + "\n";
                     break;
-                case Else:
-                    resultado += "  <Reservada else>\t" + lexer.lexeme + "\n";
+                case Entonces:
+                    resultado += "  <Reservada entonces>\t" + lexer.lexeme + "\n";
                     break;
-                case Do:
-                    resultado += "  <Reservada do>\t" + lexer.lexeme + "\n";
+                case Sino:
+                    resultado += "  <Reservada sino>\t" + lexer.lexeme + "\n";
                     break;
-                case While:
-                    resultado += "  <Reservada while>\t" + lexer.lexeme + "\n";
+                case Leer:
+                    resultado += "  <Reservada leer>\t" + lexer.lexeme + "\n";
                     break;
-                case For:
-                    resultado += "  <Reservada while>\t" + lexer.lexeme + "\n";
+                case Escribir:
+                    resultado += "  <Reservada escribir>\t" + lexer.lexeme + "\n";
+                    break;
+                case Modulo:
+                    resultado += "  <Reservada modulo>\t" + lexer.lexeme + "\n";
+                    break;
+                case ParentesisAbierto:
+                    resultado += "  <Símbolo Parentesis de apertura>\t" + lexer.lexeme + "\n";
+                    break;
+                case ParentesisCerrado:
+                    resultado += "  <Símbolo Parentesis de cierre>\t" + lexer.lexeme + "\n";
+                    break;
+                case Coma:
+                    resultado += "  <Símbolo Coma>\t" + lexer.lexeme + "\n";
                     break;
                 case Igual:
-                    resultado += "  <Operador igual>\t" + lexer.lexeme + "\n";
+                    resultado += "  <Símbolo Igual>\t" + lexer.lexeme + "\n";
                     break;
-                case Suma:
-                    resultado += "  <Operador suma>\t" + lexer.lexeme + "\n";
+                case Asignacion:
+                    resultado += "  <Símbolo de Asignacion>\t" + lexer.lexeme + "\n";
                     break;
-                case Resta:
-                    resultado += "  <Operador resta>\t" + lexer.lexeme + "\n";
+                case DosPuntos:
+                    resultado += "  <Símbolo Dos Puntos>\t" + lexer.lexeme + "\n";
                     break;
-                case Multiplicacion:
-                    resultado += "  <Operador multiplicacion>\t" + lexer.lexeme + "\n";
-                    break;
-                case Division:
-                    resultado += "  <Operador division>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_logico:
-                    resultado += "  <Operador logico>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_incremento:
-                    resultado += "  <Operador incremento>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_relacional:
-                    resultado += "  <Operador relacional>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_atribucion:
-                    resultado += "  <Operador atribucion>\t" + lexer.lexeme + "\n";
-                    break;
-                case Op_booleano:
-                    resultado += "  <Operador booleano>\t" + lexer.lexeme + "\n";
-                    break;
-                case Parentesis_a:
-                    resultado += "  <Parentesis de apertura>\t" + lexer.lexeme + "\n";
-                    break;
-                case Parentesis_c:
-                    resultado += "  <Parentesis de cierre>\t" + lexer.lexeme + "\n";
-                    break;
-                case Llave_a:
-                    resultado += "  <Llave de apertura>\t" + lexer.lexeme + "\n";
-                    break;
-                case Llave_c:
-                    resultado += "  <Llave de cierre>\t" + lexer.lexeme + "\n";
-                    break;
-                case Corchete_a:
-                    resultado += "  <Corchete de apertura>\t" + lexer.lexeme + "\n";
-                    break;
-                case Corchete_c:
-                    resultado += "  <Corchete de cierre>\t" + lexer.lexeme + "\n";
-                    break;
-                case Main:
-                    resultado += "  <Reservada main>\t" + lexer.lexeme + "\n";
-                    break;
-                case P_coma:
-                    resultado += "  <Punto y coma>\t" + lexer.lexeme + "\n";
+                case PuntoComa:
+                    resultado += "  <Símbolo Punto y coma>\t" + lexer.lexeme + "\n";
                     break;
                 case Identificador:
                     resultado += "  <Identificador>\t\t" + lexer.lexeme + "\n";
                     break;
                 case Numero:
-                    resultado += "  <Numero>\t\t" + lexer.lexeme + "\n";
+                    resultado += "  <Número>\t\t" + lexer.lexeme + "\n";
                     break;
                 case ERROR:
                     resultado += "  <Simbolo no definido>\n";
@@ -317,9 +300,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void btnArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivoActionPerformed
         
         JFileChooser chooser = new JFileChooser();
-        chooser.showOpendialog(null);
+        chooser.showOpenDialog(null);
         
-        File archivo = new File (chooser.getSelecterFile().getAbsolutePath());
+        File archivo = new File (chooser.getSelectedFile().getAbsolutePath());
         
         try {
             String ST = new String(Files.readAllBytes(archivo.toPath())); 
@@ -354,7 +337,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
        
         try {
             s.parse();
-            txtAnalizarSin.setText("Analisis realizaco correctamente");
+            txtAnalizarSin.setText("Analisis realizado correctamente");
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
         } catch (Exception ex) {
            Symbol sym  = s.getS();

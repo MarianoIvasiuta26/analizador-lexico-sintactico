@@ -30,5 +30,6 @@ public enum Tokens {
     DosPuntos,
     Identificador,
     Numero,
-    ERROR
+    ERROR,
+    Linea
 }
